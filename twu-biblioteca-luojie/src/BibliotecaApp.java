@@ -1,4 +1,5 @@
 import impl.HomePage;
+import impl.MainMenu;
 import util.StringUtil;
 
 public class BibliotecaApp {
@@ -8,7 +9,16 @@ public class BibliotecaApp {
         homePage.printWelcomeMessage();
         while (homePage.getUserName() == null) {
             homePage.printLoginMessage();
-            homePage.login(StringUtil.getNextLineFromConsole());
+            homePage.isLoginSuccess(StringUtil.getNextLineFromConsole());
+        }
+
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.printMainMenu();
+        while (true) {
+            Integer inputOption = Integer.valueOf(StringUtil.getNextLineFromConsole());
+            if (mainMenu.isInputOptionValid(inputOption)) {
+                break;
+            }
         }
     }
 }

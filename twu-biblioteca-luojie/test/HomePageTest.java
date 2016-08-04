@@ -5,26 +5,25 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class HomePageTest extends BaseResource{
-    private IHomePage homePageServices = new HomePage();
+    private IHomePage homePage = new HomePage();
 
     @Test
     public void testPrintWelcomeMessage() {
-        homePageServices.printWelcomeMessage();
-        Boolean expectResult = true;
-        Assert.assertEquals(expectResult, bytes.toString().indexOf(Constant.welcomeMessage) >= 0);
+        homePage.printWelcomeMessage();
+        Assert.assertTrue(bytes.toString().indexOf(Constant.WELCOME_MESSAGE) >= 0);
     }
 
     @Test
     public void testPrintLoginMessage() {
-        homePageServices.printLoginMessage();
-        Boolean expectResult = true;
-        Assert.assertEquals(expectResult, bytes.toString().indexOf(Constant.loginMessage) >= 0);
+        homePage.printLoginMessage();
+        Assert.assertTrue(bytes.toString().indexOf(Constant.LOGIN_MESSAGE) >= 0);
     }
 
     @Test
-    public void testLogin() {
+    public void testIsLoginSuccess() {
         final String userName = "LuoJie";
-        homePageServices.login(userName);
-        Assert.assertEquals(userName, homePageServices.getUserName());
+        homePage.isLoginSuccess(userName);
+        Assert.assertTrue(homePage.isLoginSuccess(userName));
+        Assert.assertTrue(!homePage.isLoginSuccess(null));
     }
 }

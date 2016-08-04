@@ -5,7 +5,7 @@ public interface IHomePage {
 
     void printLoginMessage();
 
-    void login(String userName);
+    Boolean isLoginSuccess(String userName);
 
     String getUserName();
 }

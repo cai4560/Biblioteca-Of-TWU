@@ -11,24 +11,26 @@ public class HomePage implements IHomePage {
     public void printWelcomeMessage() {
         System.out.println();
         System.out.println(StringUtil.getRepeatCharsByNum(50, '*'));
-        System.out.println(Constant.welcomeMessage);
+        System.out.println(Constant.WELCOME_MESSAGE);
         System.out.println(StringUtil.getRepeatCharsByNum(50, '*'));
         System.out.println();
     }
 
     @Override
     public void printLoginMessage() {
-        System.out.print(Constant.loginMessage);
+        System.out.print(Constant.LOGIN_MESSAGE);
     }
 
 
     @Override
-    public void login(String userName) {
+    public Boolean isLoginSuccess(String userName) {
         if (userName != null) {
             this.setUserName(userName);
-            System.out.println("Successful login.");
+            System.out.println("Hello, " + userName);
+            return true;
         } else {
             System.out.println("UserName is empty.");
+            return false;
         }
     }
 

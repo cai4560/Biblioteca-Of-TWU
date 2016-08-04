@@ -15,6 +15,5 @@ public class StringUtil {
         Scanner sc = new Scanner(System.in);
         String inputLine = sc.nextLine();
         return (inputLine != null && inputLine.length() > 0) ? inputLine : null;
-
     }
 }
