@@ -1,3 +1,4 @@
+import impl.BookService;
 import impl.HomePage;
 import impl.MainMenu;
 import util.StringUtil;
@@ -14,11 +15,29 @@ public class BibliotecaApp {
 
         MainMenu mainMenu = new MainMenu();
         mainMenu.printMainMenu();
+        Integer inputOption;
         while (true) {
-            Integer inputOption = Integer.valueOf(StringUtil.getNextLineFromConsole());
+            inputOption = Integer.valueOf(StringUtil.getNextLineFromConsole());
             if (mainMenu.isInputOptionValid(inputOption)) {
                 break;
             }
+        }
+
+        switch (inputOption) {
+            case 0 : System.out.println("Good bye~\n");
+                     break;
+            case 1 : {
+                        BookService bookService = new BookService();
+                        while(true) {
+                            bookService.printAllBooks();
+                            bookService.printBookMenuOptions();
+                            inputOption = Integer.valueOf(StringUtil.getNextLineFromConsole());
+                            if (bookService.isInputOptionValid(inputOption)) {
+                                break;
+                            }
+                        }
+                        break;
+                }
         }
     }
 }

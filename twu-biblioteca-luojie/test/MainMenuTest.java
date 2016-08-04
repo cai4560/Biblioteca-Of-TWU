@@ -10,8 +10,8 @@ public class MainMenuTest extends BaseResource {
     @Test
     public void testPrintMainMenu() {
         mainMenu.printMainMenu();
-        for (Integer index = 0; index < Constant.MENU_OPTION.length; index ++) {
-            Assert.assertTrue(bytes.toString().indexOf(Constant.MENU_OPTION[index]) >= 0);
+        for (Integer index = 0; index < Constant.MAIN_MENU_OPTION.length; index ++) {
+            Assert.assertTrue(bytes.toString().indexOf(Constant.MAIN_MENU_OPTION[index]) >= 0);
         }
     }
 
