@@ -48,9 +48,28 @@ public class BookServiceTest extends BaseResource {
 
     @Test
     public void testPrintDetailByIdWithInvalidInput() {
-        bookService.printDetailById(null);
+        Assert.assertTrue(!bookService.printDetailById(null));
         Assert.assertTrue(bytes.toString().indexOf(Constant.EXCEPTION.EMPTY_BOOK_ID_MESSAGE) >= 0);
-        bookService.printDetailById(0);
+        Assert.assertTrue(!bookService.printDetailById(0));
+        Assert.assertTrue(bytes.toString().indexOf(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE) >= 0);
+    }
+
+    @Test
+    public void testCheckOutBookById() {
+        final Integer bookId = 3;
+        Assert.assertTrue(bookService.checkOutBookById(bookId));
+        Assert.assertTrue(bytes.toString().indexOf(Constant.NORMAL.BOOK_CHECK_OUT_SUCCESSFUL) >= 0);
+
+        Assert.assertTrue(!bookService.checkOutBookById(bookId));
+        Assert.assertTrue(bytes.toString().indexOf(Constant.NORMAL.BOOK_CHECK_OUT_UNSUCCESSFUL) >= 0);
+    }
+
+    @Test
+    public void testCheckOutBookByIdWithInvalidInput() {
+        Assert.assertTrue(!bookService.checkOutBookById(null));
+        Assert.assertTrue(bytes.toString().indexOf(Constant.EXCEPTION.EMPTY_BOOK_ID_MESSAGE) >= 0);
+
+        Assert.assertTrue(!bookService.checkOutBookById(new Integer(-1)));
         Assert.assertTrue(bytes.toString().indexOf(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE) >= 0);
     }
 }

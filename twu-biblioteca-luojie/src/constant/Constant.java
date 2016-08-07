@@ -2,10 +2,15 @@ package constant;
 
 public class Constant {
     public static Integer quitNumber = 0;
-    public static String WELCOME_MESSAGE = "  Welcome to the Bangalore Public Library !!! ";
-    public static String LOGIN_MESSAGE = "Please enter the username to login the server : ";
-    public static String MENU_OPTION_MESSAGE = "Please choose the option you want : ";
-    public static String BOOK_DETAIL_MESSAGE = "Please input the id of book to view detail: ";
+    public interface NORMAL {
+        String WELCOME_MESSAGE = "Welcome to the Bangalore Public Library !";
+        String LOGIN_MESSAGE = "Please enter the username to login the server : ";
+        String MENU_OPTION_MESSAGE = "Please choose the option you want : ";
+        String BOOK_DETAIL_INPUT_MESSAGE = "Please input the id of book to view detail: ";
+        String BOOK_CHECK_OUT_INPUT_MESSAGE = "Please input the id of book to check out:";
+        String BOOK_CHECK_OUT_SUCCESSFUL = "Thank you! Enjoy the book.";
+        String BOOK_CHECK_OUT_UNSUCCESSFUL = "That book is not available, please try another book.";
+    }
     public interface EXCEPTION{
         String INVALID_OPTION_MESSAGE = "The input option is invalid, Please input again.";
         String EMPTY_BOOK_ID_MESSAGE = "The input id of book is empty, Please input again.";

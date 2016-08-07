@@ -13,13 +13,17 @@ public class BookService implements IBookService {
     private Integer maxLengthOfAuthor = new Integer(0);
     private Integer columnSpaceNum = 2;
     private Character space = ' ';
+    private Boolean isCheckedOut = true;
     private List<BookDTO> bookList = new ArrayList<>();
 
     private InputOptionValidator validator = new InputOptionValidator();
 
+    public BookService() {
+        bookList = getAllBooks();
+    }
+
     @Override
     public void printAllBooks() {
-        bookList = getAllBooks();
         printTitleLine();
         bookList.forEach(this::printBookInfoByFormat);
     }
@@ -29,7 +33,7 @@ public class BookService implements IBookService {
     public void printBookMenuOptions() {
         List<String> bookMenuOption = StringUtil.getMenuOptions(Constant.BOOK_MENU_OPTION);
         if (bookMenuOption != null && bookMenuOption.size() > 0) {
-            System.out.println(Constant.MENU_OPTION_MESSAGE);
+            System.out.println(Constant.NORMAL.MENU_OPTION_MESSAGE);
             StringUtil.printMenuOptions(bookMenuOption);
         }
     }
@@ -40,17 +44,49 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public void printDetailById(Integer bookId) {
-        if (bookId == null) {
-            System.out.println(Constant.EXCEPTION.EMPTY_BOOK_ID_MESSAGE);
+    public void printBookDetailInputMessage() {
+        System.out.println(Constant.NORMAL.BOOK_DETAIL_INPUT_MESSAGE);
+    }
+
+    @Override
+    public Boolean printDetailById(Integer bookId) {
+        if (isBookIdEmpty(bookId)) {
+            return false;
         }
         for (BookDTO book : bookList) {
             if (book.getId().equals(bookId)) {
                 System.out.println("  " + book.getDescription());
-                return;
+                return true;
             }
         }
         System.out.println(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE);
+        return false;
+    }
+
+    @Override
+    public void printCheckOutMessage() {
+        System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_INPUT_MESSAGE);
+    }
+
+    @Override
+    public Boolean checkOutBookById(Integer bookId) {
+        if (isBookIdEmpty(bookId)) {
+            return false;
+        }
+        for (BookDTO book : bookList) {
+            if (book.getId().equals(bookId)) {
+                if (book.getCheckOut().equals(isCheckedOut)) {
+                    System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_UNSUCCESSFUL);
+                    return false;
+                } else {
+                    System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_SUCCESSFUL);
+                    book.setCheckOut(isCheckedOut);
+                    return true;
+                }
+            }
+        }
+        System.out.println(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE);
+        return false;
     }
 
     private void printTitleLine() {
@@ -75,7 +111,7 @@ public class BookService implements IBookService {
 
     public List<BookDTO> getAllBooks() {
         List<BookDTO> bookList = new ArrayList<>();
-        Integer bookId = 0;
+        Integer bookId = 1;
         for (Integer index = 0 ; index < Constant.BOOK_LIST.length; index ++) {
             String[] bookInfo = Constant.BOOK_LIST[index].split(", ");
             bookList.add(new BookDTO(bookId, bookInfo[0], bookInfo[1], bookInfo[2]));
@@ -98,5 +134,13 @@ public class BookService implements IBookService {
             return spaceStr + info + spaceStr + space;
         }
         return spaceStr + info + spaceStr;
+    }
+
+    private Boolean isBookIdEmpty(Integer bookId) {
+        if (bookId == null) {
+            System.out.println(Constant.EXCEPTION.EMPTY_BOOK_ID_MESSAGE);
+            return true;
+        }
+        return false;
     }
 }

@@ -10,13 +10,13 @@ public class HomePageTest extends BaseResource{
     @Test
     public void testPrintWelcomeMessage() {
         homePage.printWelcomeMessage();
-        Assert.assertTrue(bytes.toString().indexOf(Constant.WELCOME_MESSAGE) >= 0);
+        Assert.assertTrue(bytes.toString().indexOf(Constant.NORMAL.WELCOME_MESSAGE) >= 0);
     }
 
     @Test
     public void testPrintLoginMessage() {
         homePage.printLoginMessage();
-        Assert.assertTrue(bytes.toString().indexOf(Constant.LOGIN_MESSAGE) >= 0);
+        Assert.assertTrue(bytes.toString().indexOf(Constant.NORMAL.LOGIN_MESSAGE) >= 0);
     }
 
     @Test

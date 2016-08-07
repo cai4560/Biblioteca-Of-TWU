@@ -7,5 +7,11 @@ public interface IBookService{
 
     Boolean isInputOptionValid(Integer option);
 
-    void printDetailById(Integer bookId);
+    void printBookDetailInputMessage();
+
+    Boolean printDetailById(Integer bookId);
+
+    void printCheckOutMessage();
+
+    Boolean checkOutBookById(Integer bookId);
 }

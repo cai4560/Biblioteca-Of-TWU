@@ -13,7 +13,7 @@ public class MainMenu implements IMainMenu {
     public void printMainMenu() {
         List<String> mainMenuOptions = StringUtil.getMenuOptions(Constant.MAIN_MENU_OPTION);
         if (mainMenuOptions != null && mainMenuOptions.size() > 1) {
-            System.out.println(Constant.MENU_OPTION_MESSAGE);
+            System.out.println(Constant.NORMAL.MENU_OPTION_MESSAGE);
             StringUtil.printMenuOptions(mainMenuOptions);
         }
     }

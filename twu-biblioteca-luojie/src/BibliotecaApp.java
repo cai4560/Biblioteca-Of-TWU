@@ -37,7 +37,7 @@ public class BibliotecaApp {
                                 break;
                             }
                         }
-                        System.out.println(Constant.BOOK_DETAIL_MESSAGE);
+                        bookService.printBookDetailInputMessage();
                         Integer bookId = Integer.valueOf(StringUtil.getNextLineFromConsole());
                         bookService.printDetailById(bookId);
                         break;
