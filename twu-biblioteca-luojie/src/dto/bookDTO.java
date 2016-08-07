@@ -45,12 +45,12 @@ public class BookDTO {
         this.author = author;
     }
 
-    public Boolean getCheckOut() {
+    public Boolean getIsCheckedOut() {
         return isCheckedOut;
     }
 
-    public void setCheckOut(Boolean checkOut) {
-        isCheckedOut = checkOut;
+    public void setIsCheckedOut(Boolean isCheckedOut) {
+        this.isCheckedOut = isCheckedOut;
     }
 
     public String getDescription() {

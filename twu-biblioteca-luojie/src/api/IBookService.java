@@ -1,11 +1,16 @@
 package api;
 
-public interface IBookService{
-    void printAllBooks();
+import dto.BookDTO;
 
+import java.util.List;
+
+
+public interface IBookService{
     void printBookMenuOptions();
 
     Boolean isInputOptionValid(Integer option);
+
+    void printAllBooks();
 
     void printBookDetailInputMessage();
 
@@ -13,5 +18,9 @@ public interface IBookService{
 
     void printCheckOutMessage();
 
-    Boolean checkOutBookById(Integer bookId);
+    void printReturnMessage();
+
+    Boolean checkOutOrReturnBookById(Integer bookId, String action);
+
+    List<BookDTO> getBookList() ;
 }

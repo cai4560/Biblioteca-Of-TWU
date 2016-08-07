@@ -8,8 +8,11 @@ public class Constant {
         String MENU_OPTION_MESSAGE = "Please choose the option you want : ";
         String BOOK_DETAIL_INPUT_MESSAGE = "Please input the id of book to view detail: ";
         String BOOK_CHECK_OUT_INPUT_MESSAGE = "Please input the id of book to check out:";
+        String BOOK_RETURN_INPUT_MESSAGE = "Please input the id of book to return:";
         String BOOK_CHECK_OUT_SUCCESSFUL = "Thank you! Enjoy the book.";
         String BOOK_CHECK_OUT_UNSUCCESSFUL = "That book is not available, please try another book.";
+        String BOOK_RETURN_SUCCESSFUL = "Thank you for returning the book";
+        String BOOK_RETURN_UNSUCCESSFUL = "That is not a valid book to return, please try another book.";
     }
     public interface EXCEPTION{
         String INVALID_OPTION_MESSAGE = "The input option is invalid, Please input again.";
