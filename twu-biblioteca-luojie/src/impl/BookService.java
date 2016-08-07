@@ -13,12 +13,13 @@ public class BookService implements IBookService {
     private Integer maxLengthOfAuthor = new Integer(0);
     private Integer columnSpaceNum = 2;
     private Character space = ' ';
+    private List<BookDTO> bookList = new ArrayList<>();
 
     private InputOptionValidator validator = new InputOptionValidator();
 
     @Override
     public void printAllBooks() {
-        List<BookDTO> bookList = getAllBooks();
+        bookList = getAllBooks();
         printTitleLine();
         bookList.forEach(this::printBookInfoByFormat);
     }
@@ -36,6 +37,20 @@ public class BookService implements IBookService {
     @Override
     public Boolean isInputOptionValid(Integer option) {
         return validator.isValid(option, Constant.BOOK_MENU_OPTION);
+    }
+
+    @Override
+    public void printDetailById(Integer bookId) {
+        if (bookId == null) {
+            System.out.println(Constant.EXCEPTION.EMPTY_BOOK_ID_MESSAGE);
+        }
+        for (BookDTO book : bookList) {
+            if (book.getId().equals(bookId)) {
+                System.out.println("  " + book.getDescription());
+                return;
+            }
+        }
+        System.out.println(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE);
     }
 
     private void printTitleLine() {

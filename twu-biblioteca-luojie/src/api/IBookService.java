@@ -6,4 +6,6 @@ public interface IBookService{
     void printBookMenuOptions();
 
     Boolean isInputOptionValid(Integer option);
+
+    void printDetailById(Integer bookId);
 }

@@ -1,3 +1,4 @@
+import constant.Constant;
 import impl.BookService;
 import impl.HomePage;
 import impl.MainMenu;
@@ -36,6 +37,9 @@ public class BibliotecaApp {
                                 break;
                             }
                         }
+                        System.out.println(Constant.BOOK_DETAIL_MESSAGE);
+                        Integer bookId = Integer.valueOf(StringUtil.getNextLineFromConsole());
+                        bookService.printDetailById(bookId);
                         break;
                 }
         }

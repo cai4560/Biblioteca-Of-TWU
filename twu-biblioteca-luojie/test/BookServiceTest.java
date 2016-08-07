@@ -31,4 +31,26 @@ public class BookServiceTest extends BaseResource {
         Assert.assertTrue(bookService.isInputOptionValid(new Integer(0)));
         Assert.assertTrue(!bookService.isInputOptionValid(new Integer(-1)));
     }
+
+    @Test
+    public void testPrintDetailById() {
+        final Integer bookId = 3;
+        bookService.printDetailById(new Integer(bookId));
+        for (Integer bookIndex = 0; bookIndex < Constant.BOOK_LIST.length; bookIndex ++) {
+            String[] bookInfo = Constant.BOOK_LIST[bookIndex].split(", ");
+            for (Integer infoIndex = 0; infoIndex < bookInfo.length - 1; infoIndex ++) {
+                if (bookInfo[0].equals(bookId.toString())) {
+                    Assert.assertTrue(bytes.toString().indexOf(bookInfo[2]) >= 0);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testPrintDetailByIdWithInvalidInput() {
+        bookService.printDetailById(null);
+        Assert.assertTrue(bytes.toString().indexOf(Constant.EXCEPTION.EMPTY_BOOK_ID_MESSAGE) >= 0);
+        bookService.printDetailById(0);
+        Assert.assertTrue(bytes.toString().indexOf(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE) >= 0);
+    }
 }
