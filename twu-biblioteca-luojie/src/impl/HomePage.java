@@ -13,14 +13,12 @@ public class HomePage implements IHomePage {
         System.out.println(StringUtil.getRepeatCharsByNum(50, '*'));
         System.out.println(Constant.NORMAL.WELCOME_MESSAGE);
         System.out.println(StringUtil.getRepeatCharsByNum(50, '*'));
-        System.out.println();
     }
 
     @Override
     public void printLoginMessage() {
         System.out.print(Constant.NORMAL.LOGIN_MESSAGE);
     }
-
 
     @Override
     public Boolean isLoginSuccess(String userName) {

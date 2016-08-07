@@ -11,8 +11,6 @@ public class BookDTO {
 
     private String description;
 
-    public BookDTO() {}
-
     public BookDTO(Integer id, String name, String author, String description) {
         this.id = id;
         this.name = name;

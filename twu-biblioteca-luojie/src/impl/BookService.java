@@ -26,8 +26,8 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public void printBookMenuOptions() {
-        List<String> bookMenuOption = StringUtil.getMenuOptions(Constant.BOOK_MENU_OPTION);
+    public void printBookListMenuOptions() {
+        List<String> bookMenuOption = StringUtil.getMenuOptions(Constant.BOOK_LIST_MENU_OPTION);
         if (bookMenuOption != null && bookMenuOption.size() > 0) {
             System.out.println(Constant.NORMAL.MENU_OPTION_MESSAGE);
             StringUtil.printMenuOptions(bookMenuOption);
@@ -35,19 +35,20 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Boolean isInputOptionValid(Integer option) {
-        return validator.isValid(option, Constant.BOOK_MENU_OPTION);
+    public Boolean isInputOptionValid(Integer option, String[] optionList) {
+        return validator.isValid(option, optionList);
     }
 
     @Override
     public void printAllBooks() {
         printTitleLine();
         bookList.forEach(this::printBookInfoByFormat);
+        System.out.println();
     }
 
     @Override
     public void printBookDetailInputMessage() {
-        System.out.println(Constant.NORMAL.BOOK_DETAIL_INPUT_MESSAGE);
+        System.out.print(Constant.NORMAL.BOOK_DETAIL_INPUT_MESSAGE);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class BookService implements IBookService {
         }
         for (BookDTO book : bookList) {
             if (book.getId().equals(bookId)) {
-                System.out.println("  " + book.getDescription());
+                System.out.println(book.getDescription());
                 return true;
             }
         }
@@ -67,12 +68,12 @@ public class BookService implements IBookService {
 
     @Override
     public void printCheckOutMessage() {
-        System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_INPUT_MESSAGE);
+        System.out.print(Constant.NORMAL.BOOK_CHECK_OUT_INPUT_MESSAGE);
     }
 
     @Override
     public void printReturnMessage() {
-        System.out.println(Constant.NORMAL.BOOK_RETURN_INPUT_MESSAGE);
+        System.out.print(Constant.NORMAL.BOOK_RETURN_INPUT_MESSAGE);
     }
 
     @Override
@@ -106,7 +107,7 @@ public class BookService implements IBookService {
 
     private void printBookInfoByFormat(BookDTO book) {
         String spaces = StringUtil.getRepeatCharsByNum(SPACE_NUMBER, SPACE);
-        String bookInfo = spaces + String.valueOf(book.getId().intValue() + 1) + spaces
+        String bookInfo = spaces + String.valueOf(book.getId().intValue()) + spaces
                 + getFormatBookInfo(book.getName(), maxLengthOfName)
                 + spaces
                 + getFormatBookInfo(book.getAuthor(), maxLengthOfAuthor)

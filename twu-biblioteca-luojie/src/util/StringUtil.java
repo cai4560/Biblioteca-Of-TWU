@@ -21,6 +21,12 @@ public class StringUtil {
         return (inputLine != null && inputLine.length() > 0) ? inputLine : null;
     }
 
+    public static Integer getOptionNumFromConsole() {
+        String inputStr = StringUtil.getNextLineFromConsole();
+        return (inputStr == null) ? null
+                : Integer.valueOf(inputStr);
+    }
+
     public static List<String> getMenuOptions(String options[]) {
         List<String> optionList = new ArrayList<>();
         for (Integer index = 0; index < options.length; index ++) {

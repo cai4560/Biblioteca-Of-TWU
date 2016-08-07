@@ -25,20 +25,6 @@ public class BookServiceTest extends BaseResource {
     }
 
     @Test
-    public void testPrintBookMenuOptions() {
-        bookService.printBookMenuOptions();
-        for (Integer index = 0; index < Constant.BOOK_MENU_OPTION.length; index ++) {
-            Assert.assertTrue(bytes.toString().indexOf(Constant.BOOK_MENU_OPTION[index]) >= 0);
-        }
-    }
-
-    @Test
-    public void testIsInputOptionValid() {
-        Assert.assertTrue(bookService.isInputOptionValid(new Integer(0)));
-        Assert.assertTrue(!bookService.isInputOptionValid(new Integer(-1)));
-    }
-
-    @Test
     public void testPrintDetailById() {
         final Integer bookId = 3;
         bookService.printDetailById(new Integer(bookId));

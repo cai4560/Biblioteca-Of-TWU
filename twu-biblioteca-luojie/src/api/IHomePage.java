@@ -6,6 +6,4 @@ public interface IHomePage {
     void printLoginMessage();
 
     Boolean isLoginSuccess(String userName);
-
-    String getUserName();
 }

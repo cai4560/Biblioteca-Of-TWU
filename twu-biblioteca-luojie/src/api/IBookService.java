@@ -6,9 +6,9 @@ import java.util.List;
 
 
 public interface IBookService{
-    void printBookMenuOptions();
+    void printBookListMenuOptions();
 
-    Boolean isInputOptionValid(Integer option);
+    Boolean isInputOptionValid(Integer option, String[] optionsList);
 
     void printAllBooks();
 

@@ -22,4 +22,6 @@ public class MainMenu implements IMainMenu {
     public Boolean isInputOptionValid(Integer option) {
         return validator.isValid(option, Constant.MAIN_MENU_OPTION);
     }
+
+
 }
