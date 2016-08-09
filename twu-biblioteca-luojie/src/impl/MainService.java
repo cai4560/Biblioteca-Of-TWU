@@ -3,65 +3,115 @@ package impl;
 import constant.Constant;
 import util.StringUtil;
 
-/**
- * Created by Administrator on 2016/8/7 0007.
- */
-public class MainService {
-    private HomePage homePage;
-    private MainMenu mainMenu;
-    private BookService bookService;
 
-    private String CHECK_OUT = "check out";
-    private String RETURN    = "return";
+public class MainService {
+    private MenuService menuService;
+    private BookService bookService;
+    private UserService userService;
+    private MovieService movieService;
 
     public MainService() {
-        homePage = new HomePage();
-        mainMenu = new MainMenu();
+        menuService = new MenuService();
+        userService = new UserService();
         bookService = new BookService();
+        movieService = new MovieService();
     }
 
     public void start() {
         showHomePage();
+        login();
         startService();
     }
 
-    public void showHomePage() {
-        homePage.printWelcomeMessage();
-        while (homePage.getUserName() == null) {
-            homePage.printLoginMessage();
-            homePage.isLoginSuccess(StringUtil.getNextLineFromConsole());
-        }
+    private void showHomePage() {
+        menuService.printWelcomeMessage();
         System.out.println();
     }
 
-    public void startService() {
+    private void login() {
+        while (userService.getCurrentUser() == null) {
+            userService.printLoginUsernameMessage();
+            String username = StringUtil.getNextLineFromConsole();
+            userService.printLoginPasswordMessage();
+            String password = StringUtil.getNextLineFromConsole();
+            userService.isLoginSuccess(username, password);
+        }
+    }
+
+    private void startService() {
         Integer inputOption;
         while (true) {
-            mainMenu.printMainMenu();
+            menuService.printMainMenu();
             inputOption = StringUtil.getOptionNumFromConsole();
-            if (mainMenu.isInputOptionValid(inputOption)) {
+            if (menuService.isInputOptionValid(inputOption, Constant.MAIN_MENU_OPTION)) {
                 break;
             }
         }
-        startServiceByOption(inputOption);
+        chooseOptionsInMainMenu(inputOption);
     }
 
-    private void startServiceByOption(Integer inputOption) {
-        switch (inputOption) {
+    private void chooseOptionsInMainMenu(Integer option) {
+        switch (option) {
             case 0 : quitTheServer();
-                break;
-            case 1 : listAllBooks();
-                break;
-            case 2 : checkOutOrReturnBook(CHECK_OUT);
-                break;
-            case 3 : checkOutOrReturnBook(RETURN);
-                break;
+                     break;
+            case 1 : startBookService();
+                     break;
+            case 2 : startMovieService();
+                     break;
+            case 3 : userService.printCurrentUserInfo();
+                     startService();
+                     break;
             default: break;
         }
     }
 
     private void quitTheServer() {
         System.out.println(Constant.NORMAL.QUIT_MESSAGE);
+        System.exit(0);
+    }
+
+    private void startBookService() {
+        Integer inputOption;
+        while (true) {
+            menuService.printBookMenu();
+            inputOption = StringUtil.getOptionNumFromConsole();
+            if (menuService.isInputOptionValid(inputOption, Constant.BOOK_MENU_OPTION)) {
+                break;
+            }
+        }
+
+        switch (inputOption) {
+            case 0 : startService();
+                     break;
+            case 1 : listAllBooks();
+                     break;
+            case 2 : checkOutOrReturnBook(Constant.CHECK_OUT);
+                     break;
+            case 3 : checkOutOrReturnBook(Constant.RETURN);
+                     break;
+            default: break;
+        }
+    }
+
+    private void startMovieService() {
+        Integer inputOption;
+        while (true) {
+            menuService.printMovieMenu();
+            inputOption = StringUtil.getOptionNumFromConsole();
+            if (menuService.isInputOptionValid(inputOption, Constant.MOVIE_MENU_OPTION)) {
+                break;
+            }
+        }
+
+        switch (inputOption) {
+            case 0 : startService();
+                     break;
+            case 1 : listAllMovies();
+                     break;
+            case 2 : checkOutMovie();
+                     break;
+            default: break;
+        }
     }
 
     private void listAllBooks() {
@@ -77,8 +127,8 @@ public class MainService {
             if (bookService.printDetailById(bookId)) {
                 this.showBookDetails();
             }
-            if (bookId != null && bookId.equals(new Integer(0))) {
-                this.startService();
+            if (bookId != null && bookId.equals(0)) {
+                this.startBookService();
                 break;
             }
         }
@@ -86,22 +136,41 @@ public class MainService {
 
     private void checkOutOrReturnBook(String action) {
         while(true) {
-            if (action.equals(CHECK_OUT)) {
+            if (action.equals(Constant.CHECK_OUT)) {
                 bookService.printCheckOutMessage();
             } else {
                 bookService.printReturnMessage();
             }
             Integer bookId = StringUtil.getOptionNumFromConsole();
-            if (bookService.checkOutOrReturnBookById(bookId, action)) {
+            if (bookService.checkOutOrReturnBookById(bookId, action, userService.getCurrentUser().getUserName())) {
                 bookService.printAllBooks();
                 this.checkOutOrReturnBook(action);
             }
-            if (bookId != null && bookId.equals(new Integer(0))) {
-                this.startService();
+            if (bookId != null && bookId.equals(0)) {
+                this.startBookService();
                 break;
             }
         }
     }
 
+    private void checkOutMovie() {
+        while (true) {
+            movieService.printCheckOutMessage();
+            Integer movieId = StringUtil.getOptionNumFromConsole();
+            if (movieService.checkOutMovieById(movieId, userService.getCurrentUser().getUserName())) {
+                movieService.printAllMovies();
+                this.checkOutMovie();
+            }
+            if (movieId != null && movieId.equals(0)) {
+                this.startMovieService();
+                break;
+            }
+        }
+    }
 
+    private void listAllMovies() {
+        movieService.printAllMovies();
+        System.out.println();
+        startMovieService();
+    }
 }

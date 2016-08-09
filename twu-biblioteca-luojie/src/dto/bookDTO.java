@@ -1,5 +1,7 @@
 package dto;
 
+import constant.Constant;
+
 public class BookDTO {
     private Integer id;
 
@@ -7,16 +9,16 @@ public class BookDTO {
 
     private String author;
 
-    private Boolean isCheckedOut;
-
     private String description;
+
+    private String borrower;
 
     public BookDTO(Integer id, String name, String author, String description) {
         this.id = id;
         this.name = name;
         this.author = author;
         this.description = description;
-        this.isCheckedOut = false;
+        this.borrower = Constant.NONE;
     }
 
     public Integer getId() {
@@ -43,19 +45,19 @@ public class BookDTO {
         this.author = author;
     }
 
-    public Boolean getIsCheckedOut() {
-        return isCheckedOut;
-    }
-
-    public void setIsCheckedOut(Boolean isCheckedOut) {
-        this.isCheckedOut = isCheckedOut;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(String borrower) {
+        this.borrower = borrower;
     }
 }

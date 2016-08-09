@@ -8,8 +8,6 @@ import java.util.List;
 public interface IBookService{
     void printBookListMenuOptions();
 
-    Boolean isInputOptionValid(Integer option, String[] optionsList);
-
     void printAllBooks();
 
     void printBookDetailInputMessage();
@@ -20,7 +18,7 @@ public interface IBookService{
 
     void printReturnMessage();
 
-    Boolean checkOutOrReturnBookById(Integer bookId, String action);
+    Boolean checkOutOrReturnBookById(Integer bookId, String action, String userName);
 
     List<BookDTO> getBookList() ;
 }

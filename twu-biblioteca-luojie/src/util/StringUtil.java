@@ -39,10 +39,19 @@ public class StringUtil {
         for (Integer index = 1; index < mainOptions.size(); index ++) {
             System.out.println(getOptionInfo(mainOptions.get(index), index));
         }
-        System.out.println(getOptionInfo(mainOptions.get(Constant.quitNumber), Constant.quitNumber));
+        System.out.println(getOptionInfo(mainOptions.get(Constant.QUIT_NUMBER), Constant.QUIT_NUMBER));
     }
 
     private static String getOptionInfo(String option, Integer index) {
         return "  " + index.toString() + ". " + option;
+    }
+
+    public static String getFormatInfo(String info, Integer maxLength) {
+        Integer spaceLength = maxLength - info.length();
+        String spaceStr = StringUtil.getRepeatCharsByNum(spaceLength / 2, Constant.SPACE);
+        if (spaceLength % 2 != 0) {
+            return spaceStr + info + spaceStr + Constant.SPACE;
+        }
+        return spaceStr + info + spaceStr;
     }
 }

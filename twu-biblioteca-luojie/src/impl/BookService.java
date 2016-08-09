@@ -9,17 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookService implements IBookService {
-    private Integer maxLengthOfName = new Integer(0);
-    private Integer maxLengthOfAuthor = new Integer(0);
+    private int maxLengthOfName = 0;
+    private int maxLengthOfAuthor = 0;
     private List<BookDTO> bookList = new ArrayList<>();
-    private InputOptionValidator validator = new InputOptionValidator();
-
-    private Integer SPACE_NUMBER = 2;
-    private Character SPACE = ' ';
-    private Boolean IS_CHECKED_OUT = true;
-    private Boolean NOT_CHECKED_OUT = false;
-    private String CHECK_OUT = "check out";
-    private String RETURN    = "return";
+    private int SPACE_NUMBER = 2;
 
     public BookService() {
         bookList = getAllBooks();
@@ -35,15 +28,9 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Boolean isInputOptionValid(Integer option, String[] optionList) {
-        return validator.isValid(option, optionList);
-    }
-
-    @Override
     public void printAllBooks() {
         printTitleLine();
         bookList.forEach(this::printBookInfoByFormat);
-        System.out.println();
     }
 
     @Override
@@ -77,15 +64,15 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Boolean checkOutOrReturnBookById(Integer bookId, String action) {
+    public Boolean checkOutOrReturnBookById(Integer bookId, String action, String userName) {
         if (isBookIdInvalid(bookId)) {
             return false;
         }
         for (BookDTO book : bookList) {
             if (book.getId().equals(bookId)) {
-                if (action.equals(CHECK_OUT)) {
-                    return getCheckOutResult(book);
-                } else if (action.equals(RETURN)){
+                if (action.equals(Constant.CHECK_OUT)) {
+                    return getCheckOutResult(book, userName);
+                } else if (action.equals(Constant.RETURN)){
                     return getReturnResult(book);
                 } else {
                     return false;
@@ -96,26 +83,24 @@ public class BookService implements IBookService {
     }
 
     private void printTitleLine() {
-        String spaces = StringUtil.getRepeatCharsByNum(SPACE_NUMBER, SPACE);
-        String bookInfo = spaces + "id" + spaces
-                + getFormatBookInfo("Name", maxLengthOfName)
-                + spaces
-                + getFormatBookInfo("Author", maxLengthOfAuthor)
-                + "Checked Out";
+        String spaces = StringUtil.getRepeatCharsByNum(SPACE_NUMBER, Constant.SPACE);
+        String bookInfo = spaces + "Id"
+                        + spaces + StringUtil.getFormatInfo("Name", maxLengthOfName)
+                        + spaces + StringUtil.getFormatInfo("Author", maxLengthOfAuthor)
+                        + spaces + "Borrower";
         System.out.println(bookInfo);
     }
 
     private void printBookInfoByFormat(BookDTO book) {
-        String spaces = StringUtil.getRepeatCharsByNum(SPACE_NUMBER, SPACE);
-        String bookInfo = spaces + String.valueOf(book.getId().intValue()) + spaces
-                + getFormatBookInfo(book.getName(), maxLengthOfName)
-                + spaces
-                + getFormatBookInfo(book.getAuthor(), maxLengthOfAuthor)
-                + spaces + book.getIsCheckedOut();
+        String spaces = StringUtil.getRepeatCharsByNum(SPACE_NUMBER, Constant.SPACE);
+        String bookInfo = spaces + StringUtil.getFormatInfo(String.valueOf(book.getId().intValue()), "Id".length())
+                        + spaces + StringUtil.getFormatInfo(book.getName(), maxLengthOfName)
+                        + spaces + StringUtil.getFormatInfo(book.getAuthor(), maxLengthOfAuthor)
+                        + spaces + StringUtil.getFormatInfo(book.getBorrower(), "Borrower".length());
         System.out.println(bookInfo);
     }
 
-    public List<BookDTO> getAllBooks() {
+    private List<BookDTO> getAllBooks() {
         List<BookDTO> bookList = new ArrayList<>();
         Integer bookId = 1;
         for (Integer index = 0 ; index < Constant.BOOK_LIST.length; index ++) {
@@ -133,43 +118,35 @@ public class BookService implements IBookService {
         return bookList;
     }
 
-    private String getFormatBookInfo(String info, Integer maxLength) {
-        Integer spaceLength = maxLength - info.length();
-        String spaceStr = StringUtil.getRepeatCharsByNum(spaceLength / 2, SPACE);
-        if (spaceLength % 2 != 0) {
-            return spaceStr + info + spaceStr + SPACE;
-        }
-        return spaceStr + info + spaceStr;
-    }
 
     private Boolean isBookIdInvalid(Integer bookId) {
         if (bookId == null) {
             System.out.println(Constant.EXCEPTION.EMPTY_BOOK_ID_MESSAGE);
             return true;
         }
-        if (bookId.compareTo(new Integer(0)) < 0
-                || bookId.compareTo(new Integer(bookList.size())) > 0) {
+        if (bookId.compareTo(0) < 0
+                || bookId.compareTo(bookList.size()) > 0) {
             System.out.println(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE);
             return true;
         }
         return false;
     }
 
-    private Boolean getCheckOutResult(BookDTO book) {
-        if (book.getIsCheckedOut()) {
+    private Boolean getCheckOutResult(BookDTO book, String userName) {
+        if (book.getBorrower().equals(Constant.NONE)) {
+            System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_SUCCESSFUL);
+            book.setBorrower(userName);
+            return true;
+        } else {
             System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_UNSUCCESSFUL);
             return false;
-        } else {
-            System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_SUCCESSFUL);
-            book.setIsCheckedOut(IS_CHECKED_OUT);
-            return true;
         }
     }
 
     private Boolean getReturnResult(BookDTO book) {
-        if (book.getIsCheckedOut()) {
+        if (!book.getBorrower().equals(Constant.NONE)) {
             System.out.println(Constant.NORMAL.BOOK_RETURN_SUCCESSFUL);
-            book.setIsCheckedOut(NOT_CHECKED_OUT);
+            book.setBorrower(Constant.NONE);
             return true;
         } else {
             System.out.println(Constant.NORMAL.BOOK_RETURN_UNSUCCESSFUL);
