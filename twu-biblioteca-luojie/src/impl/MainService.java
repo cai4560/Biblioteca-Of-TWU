@@ -1,6 +1,8 @@
 package impl;
 
 import constant.Constant;
+import constant.MenuOption;
+import constant.NormalMessage;
 import util.StringUtil;
 
 
@@ -43,7 +45,7 @@ public class MainService {
         while (true) {
             menuService.printMainMenu();
             inputOption = StringUtil.getOptionNumFromConsole();
-            if (menuService.isInputOptionValid(inputOption, Constant.MAIN_MENU_OPTION)) {
+            if (menuService.isInputOptionValid(inputOption, MenuOption.MAIN_MENU_OPTION)) {
                 break;
             }
         }
@@ -66,7 +68,7 @@ public class MainService {
     }
 
     private void quitTheServer() {
-        System.out.println(Constant.NORMAL.QUIT_MESSAGE);
+        System.out.println(NormalMessage.QUIT_MESSAGE);
         System.exit(0);
     }
 
@@ -75,7 +77,7 @@ public class MainService {
         while (true) {
             menuService.printBookMenu();
             inputOption = StringUtil.getOptionNumFromConsole();
-            if (menuService.isInputOptionValid(inputOption, Constant.BOOK_MENU_OPTION)) {
+            if (menuService.isInputOptionValid(inputOption, MenuOption.BOOK_MENU_OPTION)) {
                 break;
             }
         }
@@ -98,7 +100,7 @@ public class MainService {
         while (true) {
             menuService.printMovieMenu();
             inputOption = StringUtil.getOptionNumFromConsole();
-            if (menuService.isInputOptionValid(inputOption, Constant.MOVIE_MENU_OPTION)) {
+            if (menuService.isInputOptionValid(inputOption, MenuOption.MOVIE_MENU_OPTION)) {
                 break;
             }
         }

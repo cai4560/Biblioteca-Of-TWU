@@ -2,6 +2,9 @@ package impl;
 
 import api.IMovieService;
 import constant.Constant;
+import constant.ExceptionMessage;
+import constant.NormalMessage;
+import constant.PresetData;
 import dto.MovieDTO;
 import util.StringUtil;
 
@@ -20,15 +23,6 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public void printMovieMenuOptions() {
-        List<String> movieMenuOption = StringUtil.getMenuOptions(Constant.MOVIE_MENU_OPTION);
-        if (movieMenuOption != null && movieMenuOption.size() > 0) {
-            System.out.println(Constant.NORMAL.MENU_OPTION_MESSAGE);
-            StringUtil.printMenuOptions(movieMenuOption);
-        }
-    }
-
-    @Override
     public void printAllMovies() {
         printTitleLine();
         movieList.forEach(this::printMovieInfoByFormat);
@@ -36,7 +30,7 @@ public class MovieService implements IMovieService {
 
     @Override
     public void printCheckOutMessage() {
-        System.out.print(Constant.NORMAL.MOVIE_CHECK_OUT_INPUT_MESSAGE);
+        System.out.print(NormalMessage.MOVIE_CHECK_OUT_INPUT_MESSAGE);
     }
 
     @Override
@@ -56,8 +50,8 @@ public class MovieService implements IMovieService {
     public List<MovieDTO> getAllMovies() {
         List<MovieDTO> movieList = new ArrayList<>();
         Integer movieId = 1;
-        for (Integer index = 0 ; index < Constant.MOVIE_LIST.length; index ++) {
-            String[] movieInfo = Constant.MOVIE_LIST[index].split(", ");
+        for (Integer index = 0; index < PresetData.MOVIE_LIST.length; index ++) {
+            String[] movieInfo = PresetData.MOVIE_LIST[index].split(", ");
             movieList.add(new MovieDTO(movieId, movieInfo[0]
                     , Integer.valueOf(movieInfo[1]), movieInfo[2], movieInfo[3]));
 
@@ -96,12 +90,12 @@ public class MovieService implements IMovieService {
 
     private Boolean isMovieIdInvalid(Integer movieId) {
         if (movieId == null) {
-            System.out.println(Constant.EXCEPTION.EMPTY_MOVIE_ID_MESSAGE);
+            System.out.println(ExceptionMessage.EMPTY_MOVIE_ID_MESSAGE);
             return true;
         }
         if (movieId.compareTo(0) < 0
                 || movieId.compareTo(movieList.size()) > 0) {
-            System.out.println(Constant.EXCEPTION.INVALID_MOVIE_ID_MESSAGE);
+            System.out.println(ExceptionMessage.INVALID_MOVIE_ID_MESSAGE);
             return true;
         }
         return false;
@@ -109,11 +103,11 @@ public class MovieService implements IMovieService {
 
     private Boolean getCheckOutResult(MovieDTO movie, String userName) {
         if (movie.getBorrower().equals(Constant.NONE)) {
-            System.out.println(Constant.NORMAL.MOVIE_CHECK_OUT_SUCCESSFUL);
+            System.out.println(NormalMessage.MOVIE_CHECK_OUT_SUCCESSFUL);
             movie.setBorrower(userName);
             return true;
         } else {
-            System.out.println(Constant.NORMAL.MOVIE_CHECK_OUT_UNSUCCESSFUL);
+            System.out.println(NormalMessage.MOVIE_CHECK_OUT_UNSUCCESSFUL);
             return false;
         }
     }

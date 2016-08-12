@@ -6,8 +6,6 @@ import java.util.List;
 
 
 public interface IBookService{
-    void printBookListMenuOptions();
-
     void printAllBooks();
 
     void printBookDetailInputMessage();

@@ -5,8 +5,6 @@ import dto.MovieDTO;
 import java.util.List;
 
 public interface IMovieService {
-    void printMovieMenuOptions();
-
     void printAllMovies();
 
     void printCheckOutMessage();

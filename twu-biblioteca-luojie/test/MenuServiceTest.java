@@ -1,29 +1,48 @@
 import api.IMenuService;
-import constant.Constant;
+import constant.MenuOption;
+import constant.NormalMessage;
 import impl.MenuService;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class MenuServiceTest extends BaseResource {
-    private IMenuService mainMenu = new MenuService();
+    private IMenuService menuService = new MenuService();
 
     @Test
     public void testPrintWelcomeMessage() {
-        mainMenu.printWelcomeMessage();
-        Assert.assertTrue(bytes.toString().indexOf(Constant.NORMAL.WELCOME_MESSAGE) >= 0);
+        menuService.printWelcomeMessage();
+        Assert.assertTrue(bytes.toString().contains(NormalMessage.WELCOME_MESSAGE));
     }
 
     @Test
     public void testPrintMainMenu() {
-        mainMenu.printMainMenu();
-        for (Integer index = 0; index < Constant.BOOK_MENU_OPTION.length; index ++) {
-            Assert.assertTrue(bytes.toString().indexOf(Constant.BOOK_MENU_OPTION[index]) >= 0);
+        menuService.printMainMenu();
+        for (Integer index = 0; index < MenuOption.MAIN_MENU_OPTION.length; index ++) {
+            Assert.assertTrue(bytes.toString().contains(MenuOption.MAIN_MENU_OPTION[index]));
+        }
+    }
+
+    @Test
+    public void testPrintBookMenu() {
+        menuService.printBookMenu();
+        for (Integer index = 0; index < MenuOption.BOOK_MENU_OPTION.length; index ++) {
+            Assert.assertTrue(bytes.toString().contains(MenuOption.BOOK_MENU_OPTION[index]));
+        }
+    }
+
+    @Test
+    public void testPrintMovieMenu() {
+        menuService.printMovieMenu();
+        for (Integer index = 0; index < MenuOption.MOVIE_MENU_OPTION.length; index ++) {
+            Assert.assertTrue(bytes.toString().contains(MenuOption.MOVIE_MENU_OPTION[index]));
         }
     }
 
     @Test
     public void testIsInputOptionValid() {
-        Assert.assertTrue(mainMenu.isInputOptionValid(new Integer(0)));
-        Assert.assertTrue(!mainMenu.isInputOptionValid(new Integer(-1)));
+        Assert.assertTrue(menuService.isInputOptionValid(0, MenuOption.MAIN_MENU_OPTION));
+        Assert.assertTrue(!menuService.isInputOptionValid(-1, MenuOption.MAIN_MENU_OPTION));
+        Assert.assertTrue(menuService.isInputOptionValid(0, MenuOption.BOOK_MENU_OPTION));
+        Assert.assertTrue(!menuService.isInputOptionValid(-1, MenuOption.BOOK_MENU_OPTION));
     }
 }

@@ -2,6 +2,9 @@ package impl;
 
 import api.IBookService;
 import constant.Constant;
+import constant.ExceptionMessage;
+import constant.NormalMessage;
+import constant.PresetData;
 import dto.BookDTO;
 import util.StringUtil;
 
@@ -19,15 +22,6 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public void printBookListMenuOptions() {
-        List<String> bookMenuOption = StringUtil.getMenuOptions(Constant.BOOK_LIST_MENU_OPTION);
-        if (bookMenuOption != null && bookMenuOption.size() > 0) {
-            System.out.println(Constant.NORMAL.MENU_OPTION_MESSAGE);
-            StringUtil.printMenuOptions(bookMenuOption);
-        }
-    }
-
-    @Override
     public void printAllBooks() {
         printTitleLine();
         bookList.forEach(this::printBookInfoByFormat);
@@ -35,7 +29,7 @@ public class BookService implements IBookService {
 
     @Override
     public void printBookDetailInputMessage() {
-        System.out.print(Constant.NORMAL.BOOK_DETAIL_INPUT_MESSAGE);
+        System.out.print(NormalMessage.BOOK_DETAIL_INPUT_MESSAGE);
     }
 
     @Override
@@ -49,18 +43,18 @@ public class BookService implements IBookService {
                 return true;
             }
         }
-        System.out.println(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE);
+        System.out.println(ExceptionMessage.INVALID_BOOK_ID_MESSAGE);
         return false;
     }
 
     @Override
     public void printCheckOutMessage() {
-        System.out.print(Constant.NORMAL.BOOK_CHECK_OUT_INPUT_MESSAGE);
+        System.out.print(NormalMessage.BOOK_CHECK_OUT_INPUT_MESSAGE);
     }
 
     @Override
     public void printReturnMessage() {
-        System.out.print(Constant.NORMAL.BOOK_RETURN_INPUT_MESSAGE);
+        System.out.print(NormalMessage.BOOK_RETURN_INPUT_MESSAGE);
     }
 
     @Override
@@ -103,8 +97,8 @@ public class BookService implements IBookService {
     private List<BookDTO> getAllBooks() {
         List<BookDTO> bookList = new ArrayList<>();
         Integer bookId = 1;
-        for (Integer index = 0 ; index < Constant.BOOK_LIST.length; index ++) {
-            String[] bookInfo = Constant.BOOK_LIST[index].split(", ");
+        for (Integer index = 0; index < PresetData.BOOK_LIST.length; index ++) {
+            String[] bookInfo = PresetData.BOOK_LIST[index].split(", ");
             bookList.add(new BookDTO(bookId, bookInfo[0], bookInfo[1], bookInfo[2]));
 
             if (maxLengthOfName < bookInfo[0].length()) {
@@ -121,12 +115,12 @@ public class BookService implements IBookService {
 
     private Boolean isBookIdInvalid(Integer bookId) {
         if (bookId == null) {
-            System.out.println(Constant.EXCEPTION.EMPTY_BOOK_ID_MESSAGE);
+            System.out.println(ExceptionMessage.EMPTY_BOOK_ID_MESSAGE);
             return true;
         }
         if (bookId.compareTo(0) < 0
                 || bookId.compareTo(bookList.size()) > 0) {
-            System.out.println(Constant.EXCEPTION.INVALID_BOOK_ID_MESSAGE);
+            System.out.println(ExceptionMessage.INVALID_BOOK_ID_MESSAGE);
             return true;
         }
         return false;
@@ -134,22 +128,22 @@ public class BookService implements IBookService {
 
     private Boolean getCheckOutResult(BookDTO book, String userName) {
         if (book.getBorrower().equals(Constant.NONE)) {
-            System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_SUCCESSFUL);
+            System.out.println(NormalMessage.BOOK_CHECK_OUT_SUCCESSFUL);
             book.setBorrower(userName);
             return true;
         } else {
-            System.out.println(Constant.NORMAL.BOOK_CHECK_OUT_UNSUCCESSFUL);
+            System.out.println(NormalMessage.BOOK_CHECK_OUT_UNSUCCESSFUL);
             return false;
         }
     }
 
     private Boolean getReturnResult(BookDTO book) {
         if (!book.getBorrower().equals(Constant.NONE)) {
-            System.out.println(Constant.NORMAL.BOOK_RETURN_SUCCESSFUL);
+            System.out.println(NormalMessage.BOOK_RETURN_SUCCESSFUL);
             book.setBorrower(Constant.NONE);
             return true;
         } else {
-            System.out.println(Constant.NORMAL.BOOK_RETURN_UNSUCCESSFUL);
+            System.out.println(NormalMessage.BOOK_RETURN_UNSUCCESSFUL);
             return false;
         }
     }
